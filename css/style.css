@@ -1,0 +1,111 @@
+:root {
+    --hundred-width-height: 100%;
+    --background-property: no-repeat center center/cover;
+    --zero: 0;
+} 
+* {
+  box-sizing: border-box;
+  margin: var(--zero);
+  padding: var(--zero);
+}
+body {
+  font-family: "Roboto", sans-serif;
+  background: #333;
+  color: #fff;
+  line-height: 1.6;
+}
+.slider {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+.slide {
+  position: absolute;
+  top: var(--zero);
+  left: var(--zero);
+  width: var(--hundred-width-height);
+  height: var(--hundred-width-height);
+  opacity: var(--zero);
+  transition: opacity 0.4s ease-in-out;
+}
+.slide.current {
+  opacity: 1;
+}
+
+.slide .content {
+    position: absolute;
+    bottom: 50px;
+    left: -600px;
+    opacity: 0;
+    width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    padding: 35px;
+}
+
+.slide .content h1 {
+    margin-bottom: 10px;
+}
+
+.slide.current .content {
+    opacity: 1;
+    transform: translateX(600px);
+    transition: all 0.7s ease-in-out 0.3s;
+   
+}
+
+.buttons button#next {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+}
+.buttons button#pre {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+}
+.buttons button {
+    padding: 10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    color: #fff;
+    outline: none;
+}
+.buttons button:hover {
+    background-color: #fff;
+    color: #333;
+}
+/* Background Images */
+.slide:first-child {
+    background: url("../images/slider1.jpg") var(--background-property);
+}
+.slide:nth-child(2) {
+    background: url("../images/slider2.jpg") var(--background-property);
+}
+.slide:nth-child(3) {
+    background: url("../images/slider3.jpg") var(--background-property);
+}
+.slide:nth-child(4) {
+    background: url("../images/slider4.jpg") var(--background-property);
+}
+.slide:nth-child(5) {
+    background: url("../images/slider5.jpg") var(--background-property);
+}
+.slide:nth-child(6) {
+    background: url("../images/slider6.jpg") var(--background-property);
+}
+
+@media(max-width: 500px){
+    .slide .content {
+        bottom: -300px;
+        left: 0;
+        width: 100%
+    }
+
+    .slide.current .content {
+        transform: translateY(-300px)
+    }
+}
