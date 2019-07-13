@@ -4,7 +4,7 @@ document.getElementById("searchText").addEventListener("keyup", function(e) {
     let xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      `http://www.omdbapi.com/?apikey=be2d2c72&s=${searchTextValue}`,
+      `https://www.omdbapi.com/?apikey=be2d2c72&s=${searchTextValue}`,
       true );
     xhr.send();
     xhr.onload = function() {

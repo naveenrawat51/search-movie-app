@@ -2,7 +2,7 @@ function getMovie(){
 let getMovieId = sessionStorage.getItem("movieId");
 
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", `http://www.omdbapi.com/?apikey=be2d2c72&i=${getMovieId}`);
+        xhr.open("GET", `https://www.omdbapi.com/?apikey=be2d2c72&i=${getMovieId}`);
         xhr.send();
         xhr.onload = () => {
             if(xhr.status === 200){
