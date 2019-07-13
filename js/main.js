@@ -1,49 +1,43 @@
-let allSlides = document.querySelectorAll(".slide");
-let next = document.querySelector("#next");
-let pre = document.querySelector("#pre");
-
-let auto = true;
-const intervalTime = 3000;
-let slideInterval;
-
-let nextSlide = () => {
-    let current = document.querySelector(".current");
-    current.classList.remove("current");
-    if(current.nextElementSibling){
-        current.nextElementSibling.classList.add("current");
-    } else {
-        allSlides[0].classList.add("current");
+document.getElementById("searchText").addEventListener("keyup", function(e) {
+  let searchTextValue = document.getElementById("searchText").value;
+  if (e.keyCode === 13) {
+    let xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      `http://www.omdbapi.com/?apikey=be2d2c72&s=${searchTextValue}`,
+      true );
+    xhr.send();
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        
+        let output = "";
+        console.log(JSON.parse(xhr.responseText));
+        let data = JSON.parse(xhr.responseText);
+        if(data.Error) {
+            output += `<h3 class="text-center">No Record Found</h3>`;
+      }else {
+        data.Search.forEach((element) => {
+          output += `
+                       <div class="col-md-3">
+                           <div class="well text-center">
+                               <img src="${element.Poster}">
+                               <h5>${element.Title}</h5>
+                               <a onclick="movieSelected('${element.imdbID}')" class="btn btn-primary" >Movie Details</a>
+                           </div>
+                       </div>
+                       `;
+        });
     }
-    setTimeout(()=> current.classList.remove("current"));
-}
-
-let previousSlide = () => {
-    let current = document.querySelector(".current");
-    current.classList.remove("current");
-    if(current.previousElementSibling){
-        current.previousElementSibling.classList.add("current");
-    } else {
-        allSlides[allSlides.length - 1].classList.add("current");
-    }
-    setTimeout(()=> current.classList.remove("current"));
-}
-
-
-
-next.addEventListener("click", e => { 
-    nextSlide();
-    if(auto){
-        clearInterval(slideInterval);
-        slideInterval = setInterval(nextSlide, intervalTime)
-    } } );
+        document.getElementById("movies").innerHTML = output;
+      }
+    };
     
-pre.addEventListener("click", e => { 
-    previousSlide();
-    if(auto){
-        clearInterval(slideInterval);
-        slideInterval = setInterval(nextSlide, intervalTime)
-    } } );
+  }
+});
 
-if(auto){
-slideInterval = setInterval(nextSlide, intervalTime)
+function movieSelected(id) {
+  sessionStorage.setItem("movieId", id);
+  window.location = "movie.html";
+
+  return false;
 }
